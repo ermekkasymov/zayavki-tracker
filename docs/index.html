@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Трекер контроля заявок</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<header class="topbar">
+  <h1>Трекер контроля заявок</h1>
+  <nav class="tabs">
+    <button class="tab-btn active" data-tab="orders">Заявки</button>
+    <button class="tab-btn" data-tab="refs">Справочники</button>
+    <button class="tab-btn" data-tab="summary">Сводка</button>
+  </nav>
+  <div class="io-actions">
+    <button id="exportBtn" title="Скачать резервную копию данных">Экспорт JSON</button>
+    <label class="file-btn">Импорт JSON<input type="file" id="importInput" accept="application/json" hidden></label>
+  </div>
+</header>
+
+<main>
+  <section id="tab-orders" class="tab-panel active">
+    <div class="panel-toolbar">
+      <button id="addOrderBtn">+ Новая заявка</button>
+      <span class="hint">Клик по ячейке даты статуса проставляет сегодняшнюю дату</span>
+    </div>
+    <div class="table-scroll">
+      <table id="ordersTable">
+        <thead>
+          <tr id="ordersHeadRow"></tr>
+        </thead>
+        <tbody id="ordersBody"></tbody>
+      </table>
+    </div>
+  </section>
+
+  <section id="tab-refs" class="tab-panel">
+    <div class="refs-grid">
+      <div class="ref-card">
+        <h2>Заказчики</h2>
+        <ul id="customersList" class="ref-list"></ul>
+        <div class="ref-add"><input id="newCustomer" placeholder="Новый заказчик"><button data-list="customers">Добавить</button></div>
+      </div>
+      <div class="ref-card">
+        <h2>Поставщики</h2>
+        <ul id="suppliersList" class="ref-list"></ul>
+        <div class="ref-add"><input id="newSupplier" placeholder="Новый поставщик"><button data-list="suppliers">Добавить</button></div>
+      </div>
+      <div class="ref-card">
+        <h2>Статусы</h2>
+        <ul id="statusesList" class="ref-list"></ul>
+        <div class="ref-add"><input id="newStatus" placeholder="Новый статус"><button data-list="statuses">Добавить</button></div>
+        <p class="hint">Последний статус в списке считается «закрывающим» — такие заявки гаснут в таблице.</p>
+      </div>
+      <div class="ref-card">
+        <h2>Порог просрочки</h2>
+        <label class="threshold-field">Дней на статусе:
+          <input type="number" id="thresholdInput" min="1">
+        </label>
+      </div>
+    </div>
+  </section>
+
+  <section id="tab-summary" class="tab-panel">
+    <div class="summary-grid">
+      <div class="summary-card">
+        <h2>По статусам</h2>
+        <table id="summaryTable"><tbody></tbody></table>
+      </div>
+      <div class="summary-card">
+        <h2>Итого</h2>
+        <p><strong>Всего заявок:</strong> <span id="totalCount">0</span></p>
+        <p class="overdue-line"><strong>Просрочено:</strong> <span id="overdueCount">0</span></p>
+      </div>
+      <div class="summary-card chart-card">
+        <h2>Распределение по статусам</h2>
+        <div id="chart" class="chart"></div>
+      </div>
+    </div>
+  </section>
+</main>
+
+<script src="app.js"></script>
+</body>
+</html>
